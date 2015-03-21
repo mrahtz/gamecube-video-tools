@@ -33,7 +33,7 @@ int hs_flag = 4;
 int vs_flag = 5;
 int offset;     // i is offset this much from the start of the file
 
-enum colour_types { EIGHT, TWOFIVESIX, ALL };
+enum colour_types { GRAY, EIGHT, TWOFIVESIX, ALL };
 enum interpolation_types { LINEAR, BILINEAR };
 enum do_fuzzing { NO, YES };
 
@@ -66,6 +66,7 @@ int main (int argc, char *argv[])
 
         if (argc < 2) {
             printf ("usage:\t%s <switches> <file>\n"
+                    "\t[-y] use only luminance (for black-and-white)\n"
                     "\t[-s] show sync regions\n"
                     "\t[-l] use limited-range ycbcr to RGB conversion\n"
                     "\t[-3] 3-bit colour to match S3 Board output\n"
@@ -81,6 +82,9 @@ int main (int argc, char *argv[])
             if ((argv[i][0] == '-') &&
                     (argv[i][1] == 's'))
                 draw_syncs = 1;
+            else if ((argv[i][0] == '-') &&
+                     (argv[i][1] == 'y'))
+                colours = GRAY;
             else if ((argv[i][0] == '-') &&
                      (argv[i][1] == 'l'))
                 full_range = 0;
@@ -360,7 +364,9 @@ void draw (grid_point *grid, int dump_width, int dump_height, GdkPixbuf *pixels,
                 G = (uchar) round(clamp(sG));
                 B = (uchar) round(clamp(sB));
 
-                if (colours == EIGHT) {
+                if (colours == GRAY) {
+                    R = G = B = Y;
+                } if (colours == EIGHT) {
                     R &= (0b10000000);
                     G &= (0b10000000);
                     B &= (0b10000000);
