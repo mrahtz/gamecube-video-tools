@@ -12,6 +12,10 @@ port](http://gamesx.com/wiki/doku.php?id=av:nintendodigitalav).
   ```
   ![zelda_interlaced_1.bin](/example_images/zelda_interlaced_1.png)
   ```
+  $ ./view_raw_output video_dumps/zelda_progressive_2.bin
+  ```
+  ![zelda_progressive_2.bin](/example_images/zelda_progressive_2.png)
+  ```
   # -s: show sync regions
   $ ./view_raw_output -s video_dumps/menu.bin 
   ```
